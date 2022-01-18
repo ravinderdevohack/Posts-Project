@@ -1,0 +1,51 @@
+<%= form_with  model: @post, url: @action == 'edit' ? post_path : posts_path, method: @action == 'edit' ? :patch : :post, id: 'myPost' do |form| %>
+  <%= form.label :tilte, 'Title' %><br>
+  <%= form.text_field :title , class:'input'%><br>
+  <%= form.label :description, 'Description' %><br>
+  <%= form.text_field :description, class:'input'%><br>
+  <%= form.label :user_id, 'User ID' %><br>
+  <%= form.text_field :user_id, class:'input'%><br>
+  <input type="button" value="Submit" id="submit-btn"></input>
+
+<% end %>
+
+<script type="text/javascript">
+  var regTitle = /^[\w+\s+]{1,}$/
+  var regDescription = /^[\w+\s+.,]{10,}$/
+  var regUserId = /^[0-9]+$/
+
+  
+  var inputArray = document.querySelectorAll(".input");
+  var alertArray = ['title must be present', 'description must be present', 'user_id must be present']
+  var regArray = [regTitle, regDescription, regUserId]
+  var array = []
+  var submit = document.querySelector("#submit-btn");
+  submit.addEventListener("click", validaionCheck);
+  function validaionCheck(e) {
+    validation_pass = true
+    for (var i = 0; i < inputArray.length; i++) {
+
+      array.push(inputArray[i].value)
+      console.log(array)
+      if ( !regArray[i].test(array[i])) {
+        alert(alertArray[i]);
+        array.length = 0;
+        validation_pass = false
+        console.log(array[i]);
+        console.log(alertArray[i]);
+        break;
+      }
+    }
+    console.log('validation checked')
+    if (validation_pass) {
+      console.log('validation_pass')
+      document.getElementById("myPost").submit();
+    }else {
+      console.log('validation failed')
+      e.preventDefault();
+
+    }
+
+
+  }
+</script>

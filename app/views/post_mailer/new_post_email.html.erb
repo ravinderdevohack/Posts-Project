@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+  <p>Post</p>
+  <p>Title: <%= @post.title %></p>
+  <p>Description: <%= @post.description %></p>
+  <p>Link: <%= link_to 'Open Post', post_url(@post) %></p>
+
+</body>
+</html>
