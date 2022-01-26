@@ -1,23 +1,8 @@
+ID: <%= @post.id%>
 Title: <%= @post.title %><br>
 Description: <%= @post.description %><br>
-
-<%= button_to "Post", posts_path, method: :get %>
-<%= button_to "Edit", edit_post_path, method: :get %>
-<%=button_to "Delete", post_path, method: :delete, id:'delete-btn'  %>
-
-
-<script type="text/javascript">
-  deleteButton = document.querySelector("#delete-btn");
-  deleteButton.addEventListener("click", deleteConfirmation);
-  function deleteConfirmation(e) {
-    // alert("delete");
-    var txt;
-    if (confirm("Are you sure?")) {
-      deleteButton.setAttribute("type", "submit");
-    }else {
-      deleteButton.setAttribute("type", "button");
-      
-    }
-  }
-  
-</script>
+<% if @post.file.url.present? %>
+  Image: <%= image_tag @post.file.url, height:200, width:200  %><br> 
+  <%= link_to 'click to download', @post.file.url, download: "" %><br>
+<% end %>
+<%= button_to 'Home', posts_index_path, method: :get %>

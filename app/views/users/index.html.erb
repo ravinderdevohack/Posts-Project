@@ -1,2 +1,14 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
+<table>
+  <tr>
+    <th class="border-2">User</th>
+    <th class="border-2">File</th>
+  </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td class="border-1"><%=user.name %></td>
+        <td class="border-1"><%=user.avatar %></td>
+      </tr>
+    <% end %>
+ 
+  <tr></tr>
+</table>

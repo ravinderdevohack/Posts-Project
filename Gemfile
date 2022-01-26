@@ -75,9 +75,27 @@ end
 gem 'awesome_print'
 gem 'require_all'
 gem 'rake'
+gem 'devise'
 
 gem "byebug", "~> 11.1", :groups => [:development, :test] 
 gem "dotenv-rails", groups: [:development, :test]
 gem "letter_opener", group: :development
 
 gem 'active_model_serializers'
+gem 'carrierwave', '~> 2.0'
+gem "mini_magick"
+gem 'bcrypt'
+gem 'city-state'
+gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'humanize'
+gem "parsley-rails"
+# Use Omniauth Facebook plugin
+gem 'omniauth-facebook', '~> 4.0'
+# Use Omniauth GitHub plugin
+gem 'omniauth-github', '~> 1.1', '>= 1.1.2'
+# Use Omniauth Google plugin
+gem 'omniauth-google-oauth2', '~> 0.4.1'
+# Use Omniauth Twitter plugin
+gem 'omniauth-twitter', '~> 1.2', '>= 1.2.1'
+# Use ActiveRecord Sessions
+gem 'activerecord-session_store', '~> 1.0'

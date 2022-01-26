@@ -1,0 +1,131 @@
+<h2>Sign up</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), method: :post) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :name, "Name" %><br />
+    <%= f.text_field :name, class:"input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phone_number, "Phone Number" %><br />
+    <%= f.text_field :phone_number, class:"input" %>
+  </div>
+  
+  <div class="field">
+    <!-- Country -->
+    <%= label_tag :country %>
+    <%= collection_select_tag :country, Country.order(:name), :id, :name, include_blank: true %>                  
+  </div>
+
+  <div class="field">
+    <!-- State -->
+    <%= label_tag :state %>
+    <%= select_tag :state, options_for_select([]), id:'state' %>
+  </div>
+
+  <div class="field">
+    <!-- City -->
+    <%= f.label :city %>
+    <%= f.select :city, options_for_select([]) %>
+  </div>
+
+  <div class="field">
+    <%= f.label :avatar, "Profile Photo" %><br />
+    <%= f.file_field :avatar, class:"" %>
+    <%= f.hidden_field :avatar_cache %>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email, autofocus: true, autocomplete: "email", class:"input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br>
+    <%= f.password_field :password, autocomplete: "new-password", class:"input" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"input" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Sign up", id:"submit-btn" %>
+  </div>
+<% end %>
+<%= render "users/shared/links" %>
+
+<script>
+
+  var regName = /^[A-Za-z]{3,}$/
+  var regPhone = /^[0-9]{10}$/
+  var regEmail = /^\w[\w+.\-_]+@[A-z]+\.[A-z]+$/
+  // var regPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/
+
+  var inputArray = document.querySelectorAll(".input");
+  console.log(inputArray);
+  var regArray = new Array(regName, regPhone,  regEmail );
+  var alertArray = ["name must be greater than 3 characters ",  "enter valid Phone number",  "enter valid email address" ];
+  // "password must be greater than 8 character, conatin one special symbol, one number, one small letter and one capital letter"
+  var array = [];
+
+
+  var submit = document.querySelector("#submit-btn");
+  submit.addEventListener("click", check);
+
+  var country = document.querySelector('#country');
+  var state = document.querySelector('#state');
+  country.addEventListener("change", function(){
+    Rails.ajax({
+      url: "/states?country=" + country.value,
+      type: "GET"
+    })
+  })
+  
+  // country.addEventListener('change', function() {
+  //   console.log(state.firstChild)
+  //   while (state.firstChild) state.removeChild(state.firstChild);
+  //   var placeholder = document.createElement("option");
+  //   placeholder.text = "Choose a state";
+  //   placeholder.value = "";
+  //   state.appendChild(placeholder);
+
+  // })
+
+  
+
+  function check(e) {
+    // document.querySelectorAll(".input").forEach( item => {array.push(item.value)});
+
+    validaion_fails = false;
+    for (var i = 0; i < inputArray.length-1; i++) {
+      array.push(inputArray[i].value)
+      console.log(array)
+      if ( !regArray[i].test(array[i]) &&  array[i] != "") {
+        alert(alertArray[i]);
+        array.length = 0;
+        console.log(array[i]);
+        console.log(alertArray[i]);
+        validaion_fails = true
+        break;
+      } 
+      if (array[i] == '') {
+        alert("Please fill the Form");
+        validaion_fails = true;
+        array.length = 0;
+        console.log(array);
+        break;
+      }
+    }
+
+    if(validaion_fails) {e.preventDefault();}
+    
+    console.log('validation checked')
+  }
+
+</script>
+

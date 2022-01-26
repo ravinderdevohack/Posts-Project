@@ -1,3 +1,4 @@
+
 require_relative "boot"
 
 require "rails/all"
@@ -8,6 +9,7 @@ Bundler.require(*Rails.groups)
 
 module Posts
   class Application < Rails::Application
+    # config.api_only = true
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
@@ -18,5 +20,9 @@ module Posts
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    Humanize.configure do |config|
+      config.default_locale = :en  # [:en, :es, :fr, :tr, :de, :id], default: :en
+      config.decimals_as = :digits # [:digits, :number], default: :digits
+    end
   end
 end

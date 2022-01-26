@@ -1,4 +1,7 @@
-require "active_support/core_ext/integer/time"
+# Frequire "active_support/core_ext/integer/time"
+require 'carrierwave/orm/activerecord'
+require 'open-uri'
+require 'humanize'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -7,6 +10,11 @@ Rails.application.configure do
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
+
+  # config.debug_exception_response_format = :default
+  # config.debug_exception_response_format = :api
+  # config.debug_exception_response_format = :default
+
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -68,12 +76,13 @@ Rails.application.configure do
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
 
-# config.action_mailer.delivery_method = :letter_opener
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.delivery_method = :test
+  # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :test
   host = 'localhost:3000'
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.default_url_options = {:host => 'localhost:3000', protocol: 'http'}
 
   config.action_mailer.smtp_settings = {
@@ -84,6 +93,8 @@ Rails.application.configure do
     :authentication        => "plain",
     :enable_starttls_auto  => true
   }
+
+  
 end
 
 

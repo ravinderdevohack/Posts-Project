@@ -1,42 +1,21 @@
 <h1 class="text-center">Posts</h1>
-<table>
-  <tr>
-    <th class="border-2">ID</th>
-    <th class="border-2">Title</th>
-    <th class="border-2">Description</th>
-    <th class="border-2">Creator</th>
-    <th></th>
-  </tr>
+<%= render "view_posts"%>
 
-  <% @posts.each do |post| %>
-    <tr>
-      <td class="border-1"><%=post.id %></td>
-      <td class="border-1"><%=post.title %></td>
-      <td class="border-1"><%=post.description %></td>
-      <td class="border-1"><%=user_name(post)%></td>
-      <td class="border-1"><%=button_to "Show", post_path(post), method: :get %></td>
-      <td class="border-1"><%=button_to "Edit", edit_post_path(post), method: :get %></td>
-      <td class="border-1"><%=button_to "Delete", post_path(post), method: :delete, id:"delete-btn" %></td>
-
-    </tr>
-  <% end %>
-  <tr></tr>
-</table>
-
-<button><%= link_to 'Create New Post', 'posts/new' %></button>
 
 <script type="text/javascript">
-  deleteButton = document.querySelector("#delete-btn");
-  deleteButton.addEventListener("click", deleteConfirmation);
-  function deleteConfirmation(e) {
-    // alert("delete");
-    var txt;
+  deleteButton = document.querySelectorAll(".delete-btn");
+  console.log('dlt-btn');
+  function deleteConfirmation(e){
     if (confirm("Are you sure?")) {
-      deleteButton.setAttribute("type", "submit");
+      console.log('submit')
     }else {
-      deleteButton.setAttribute("type", "button");
-      
+      console.log('cancel')
+      e.preventDefault();
     }
+  };
+
+  for(var i = 0; i< deleteButton.length; i++) {
+    deleteButton[i].addEventListener("click", deleteConfirmation);
   }
-  
 </script>
+

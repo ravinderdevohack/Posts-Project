@@ -1,17 +1,20 @@
 class PostsController < ApplicationController
+  # before_action :authenticate_user!
   def index
-    @posts = Post.all
+    @posts = Post.all.order(:id)
+
   end
 
   def new
     @action = 'new'
     @post = Post.new
+  
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     # byebug
-    if @post.save
+    if @post.save!
       PostEmail.new(@post).send_email
       redirect_to posts_path
     else
@@ -40,15 +43,28 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    @post.destroy
+    @post.update(display: 2)
 
     redirect_to posts_path
 
   end
 
+  def search
+    @posts = FindPost.new(params[:title]).find
+  end
+
+  def draft
+    @post = current_user.posts.new(post_params)
+    if @post.save!
+      @post.update(display: 1)
+      redirect_to posts_path
+    else 
+      render "new"
+    end
+  end
+
   private
   def post_params
-    params.require(:post).permit(:title, :description, :user_id)
-    # byebug
+    params.require(:post).permit(:title, :description, :file)
   end
 end
