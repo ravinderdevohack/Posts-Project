@@ -2,22 +2,25 @@
   <%= form.label :tilte, 'Title' %><br>
   <%= form.text_field :title , class:'input'%><br>
   <%= form.label :description, 'Description' %><br>
-  <%= form.text_field :description, class:'input'%><br>
-  <%= form.label :user_id, 'User ID' %><br>
-  <%= form.text_field :user_id, class:'input'%><br>
+  <%= form.text_area :description, class:'input'%><br>
+  <%= form.label :file, 'Upload File' %><br>
+  <%= form.file_field :file, class:''%><br>
+  <%= form.hidden_field :file_cache %><br>
+
+
   <input type="button" value="Submit" id="submit-btn"></input>
 
 <% end %>
 
 <script type="text/javascript">
   var regTitle = /^[\w+\s+]{1,}$/
-  var regDescription = /^[\w+\s+.,]{10,}$/
-  var regUserId = /^[0-9]+$/
+  var regDescription = /(.){10,}/
+  // var regUserId = /^[0-9]+$/
 
   
   var inputArray = document.querySelectorAll(".input");
-  var alertArray = ['title must be present', 'description must be present', 'user_id must be present']
-  var regArray = [regTitle, regDescription, regUserId]
+  var alertArray = ['title must be present', 'description must be present']
+  var regArray = [regTitle, regDescription]
   var array = []
   var submit = document.querySelector("#submit-btn");
   submit.addEventListener("click", validaionCheck);
@@ -45,7 +48,5 @@
       e.preventDefault();
 
     }
-
-
   }
 </script>

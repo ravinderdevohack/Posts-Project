@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    @posts = Post.all
+    @posts = Post.all.order(:id)
   end
 
   def new
@@ -9,10 +9,10 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     # byebug
-    if @post.save
-      PostEmail.new(@post).send_email
+    if @post.save!
+      # PostEmail.new(@post).send_email
       redirect_to posts_path
     else
       render "new"
@@ -40,15 +40,19 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    @post.destroy
+    @post.update(display: 2)
 
     redirect_to posts_path
 
   end
 
+  # def search
+  #   @posts = FindPost.new(params[:title]).find
+  # end
+
   private
   def post_params
-    params.require(:post).permit(:title, :description, :user_id)
+    params.require(:post).permit(:title, :description)
     # byebug
   end
 end

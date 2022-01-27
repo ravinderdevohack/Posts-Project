@@ -81,3 +81,7 @@ gem "dotenv-rails", groups: [:development, :test]
 gem "letter_opener", group: :development
 
 gem 'active_model_serializers'
+gem 'devise'
+
+# gem 'omniauth-google-oauth2'
+# gem 'activerecord-session-store'
